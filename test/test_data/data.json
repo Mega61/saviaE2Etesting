@@ -1,0 +1,22 @@
+{
+    "Login": {
+        "accessUser": "jedazap@hotmail.com"
+    },
+    "ListOrders": {
+        "order_number": "7779"
+    },
+    "CreateOrders": {
+        "clientName": "Regression",
+        "productsName": [
+            "Tshirt",
+            "helado"
+        ],
+        "price": "5000"
+    },
+    "EditOrders": {
+        "price": "5000"
+    },
+    "InvoiceOrders": {
+        "selectedOrders": "5"
+    }
+}
