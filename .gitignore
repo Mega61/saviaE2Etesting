@@ -1,5 +1,6 @@
 screens
 tests_output
+.husky/
 # Logs
 logs
 *.log
