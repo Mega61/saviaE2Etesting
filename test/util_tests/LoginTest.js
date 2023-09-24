@@ -2,9 +2,7 @@ module.exports = {
   '@tags': ['login'],
 
   'login' (browser, username) {
-    // browser.globals.reuseBrowserSession = true
     let page = browser.page.saviaLogin()
-
     page
       .navigate()
       .sendKeys('@inputEmailLogin', username)

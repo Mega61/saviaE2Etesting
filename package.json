@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nightwatch && standard",
-    "standard": "standard && node my-tests.js",
+    "test": "nightwatch",
     "test-group": "nightwatch --group regression_tests"
   },
   "keywords": [],
