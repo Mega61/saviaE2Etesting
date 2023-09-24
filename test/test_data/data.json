@@ -1,8 +1,10 @@
 {
     "Login": {
-        "accessUser": "jedazap@hotmail.com"
+        "accessUser": "629ec6e7541abf7b407b0ade@savia.co",
+        "otp": "961247"
     },
     "ListOrders": {
+        "general_filter": "Regression",
         "order_number": "7779"
     },
     "CreateOrders": {
@@ -11,12 +13,22 @@
             "Tshirt",
             "helado"
         ],
-        "price": "5000"
+        "price": "5000",
+        "shippingDestination": [
+            "Juan",
+            "Daza",
+            "test2@gmail.com",
+            "0009990000",
+            "Antioquia",
+            "Medellín",
+            "Test Shipping Address 00000"
+        ]
     },
     "EditOrders": {
         "price": "5000"
     },
     "InvoiceOrders": {
+        "clientName": "Regression",
         "selectedOrders": "5"
     }
 }

@@ -6,7 +6,7 @@ const testData = JSON.parse(fs.readFileSync(testDataFilePath))
 describe('ListOrders', function () {
   this.tags = ['ListOrders', 'Regression']
 
-  before(browser => login.login(browser, testData.Login.accessUser))
+  before(browser => login.login(browser, testData.Login.accessUser, testData.Login.otp))
 
   it('Can search with non filters', function (browser) {
     const page = browser.page.activeOrders()
@@ -20,8 +20,9 @@ describe('ListOrders', function () {
     const page = browser.page.activeOrders()
     page
       .navigate()
-      .sendKeys('@inputGeneralSearch', 'Regression')
+      .sendKeys('@inputGeneralSearch', testData.ListOrders.general_filter)
       .waitForElementVisible('@tableOrders')
+      .pause(2000)
       .assert.hasDescendants('@tableOrders', 'Entries had been with general filter.')
   })
 

@@ -6,14 +6,14 @@ const testData = JSON.parse(fs.readFileSync(testDataFilePath))
 describe('InvoiceOrders', function () {
   this.tags = ['InvoiceOrders', 'Regression']
 
-  before(browser => login.login(browser, testData.Login.accessUser))
+  before(browser => login.login(browser, testData.Login.accessUser, testData.Login.otp))
 
   it('It can Invoice an order', async function (browser) {
     const page = browser.page.activeOrders()
     let orderNumber
     page
       .navigate()
-      .sendKeys('@inputGeneralSearch', 'Regression')
+      .sendKeys('@inputGeneralSearch', testData.InvoiceOrders.clientName)
       .waitForElementVisible('@numberOrderNumber')
       .click('@filterInvoiceId')
       .click('@buttonMoreActions')
@@ -38,7 +38,7 @@ describe('InvoiceOrders', function () {
     const orderNumbers = []
     page
       .navigate()
-      .sendKeys('@inputGeneralSearch', 'Regression')
+      .sendKeys('@inputGeneralSearch', testData.InvoiceOrders.clientName)
       .waitForElementVisible('@numberOrderNumber')
       .click('@filterInvoiceId')
       .pause(3000)

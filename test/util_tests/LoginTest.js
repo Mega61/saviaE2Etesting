@@ -1,12 +1,16 @@
 module.exports = {
   '@tags': ['login'],
 
-  'login' (browser, username) {
+  'login' (browser, username, password) {
     let page = browser.page.saviaLogin()
     page
       .navigate()
       .sendKeys('@inputEmailLogin', username)
       .click('@buttonLogin')
+    page.assert.visible('@emailVerificationPrompt')
+    page
+      .sendKeys('@inputOTPField', password)
+      .click('@buttonEmailVerification')
     page = browser.page.activeOrders()
     page
       .waitForElementVisible('@h3HomeHeader', 30000)

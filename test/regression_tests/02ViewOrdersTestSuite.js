@@ -6,7 +6,7 @@ const testData = JSON.parse(fs.readFileSync(testDataFilePath))
 describe('ViewOrders', function () {
   this.tags = ['ViewOrders', 'Regression']
 
-  before(browser => login.login(browser, testData.Login.accessUser))
+  before(browser => login.login(browser, testData.Login.accessUser, testData.Login.otp))
 
   it('Can view order details', function (browser) {
     let page = browser.page.activeOrders()
@@ -17,7 +17,7 @@ describe('ViewOrders', function () {
 
     page = browser.page.detailsModal()
     page
-      .assert.visible('@divClientInfo')
-      .assert.visible('@divOrderTracking')
+      .assert.visible('@divClientInfo', 'Client info detail is visible')
+      .assert.visible('@divOrderTracking', 'Client order tracking detail is visible')
   })
 })

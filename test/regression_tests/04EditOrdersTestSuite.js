@@ -7,7 +7,7 @@ const testData = JSON.parse(fs.readFileSync(testDataFilePath))
 describe('EditOrders', function () {
   this.tags = ['EditOrders', 'Regression']
 
-  before(browser => login.login(browser, testData.Login.accessUser))
+  before(browser => login.login(browser, testData.Login.accessUser, testData.Login.otp))
 
   it('Can Modify an orders payment method', async function (browser) {
     const pageActive = browser.page.activeOrders()
@@ -17,11 +17,13 @@ describe('EditOrders', function () {
       .waitForElementVisible('@tableOrders')
 
     const udsBefore = await pageActive.element('@numberUnitsInOrder').getText()
+    console.log('old amount of units ' + udsBefore)
     pageActive
       .click('@buttonMoreActions')
       .click('@buttonEditOrder')
 
     page
+      .pause(2000)
       .editPaymentType()
       .editProductPrice(testData.EditOrders.price)
       .addOrsubtractProducts()
@@ -37,6 +39,6 @@ describe('EditOrders', function () {
       .waitForElementVisible('@tableOrders')
       .assert.textContains('@numberUnitsInOrder', parseInt(udsBefore, 10) + 1, 'Unit added correctly')
 
-    console.log(await pageActive.element('@numberUnitsInOrder').getText())
+    console.log('new amount of units ' + await pageActive.element('@numberUnitsInOrder').getText())
   })
 })

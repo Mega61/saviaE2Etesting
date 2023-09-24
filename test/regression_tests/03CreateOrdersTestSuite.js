@@ -7,7 +7,7 @@ let orderNumber
 describe('CreateOrders', function () {
   this.tags = ['CreateOrders', 'Regression']
 
-  before(browser => login.login(browser, testData.Login.accessUser))
+  before(browser => login.login(browser, testData.Login.accessUser, testData.Login.otp))
 
   it('Can create a Mono SKU Order', async function (browser) {
     const page = browser.page.createOrders()
@@ -32,7 +32,7 @@ describe('CreateOrders', function () {
       .click('@buttonAddOrder')
       .searchClient(testData.CreateOrders.clientName)
       .selectTimeZone()
-      .addShippingDestination('Juan', 'Daza', 'test2@gmail.com', '0009990000', 'Antioquia', 'Medellín', 'Test Shipping Address 00000')
+      // .addShippingDestination(testData.CreateOrders.shippingDestination[0], testData.CreateOrders.shippingDestination[1], testData.CreateOrders.shippingDestination[2], testData.CreateOrders.shippingDestination[3], testData.CreateOrders.shippingDestination[4], testData.CreateOrders.shippingDestination[5], testData.CreateOrders.shippingDestination[6])
       .click('@buttonModifyUserContact')
       .click('@divSecondContactOption')
       .addMultipleProducts(testData.CreateOrders.productsName)
@@ -41,6 +41,24 @@ describe('CreateOrders', function () {
       .waitForElementVisible('@modalSuccessfulCreation')
     orderNumber = page.extractCreatedOrderNumber(await page.element('@modalSuccessfulCreation').getText())
   })
+
+  // it('Can create a Multi SKU Order with a different shipping address created within the order creation', async function (browser) {
+  //   const page = browser.page.createOrders()
+
+  //   page
+  //     .navigate()
+  //     .click('@buttonAddOrder')
+  //     .searchClient(testData.CreateOrders.clientName)
+  //     .selectTimeZone()
+  //     .addShippingDestination(testData.CreateOrders.shippingDestination[0], testData.CreateOrders.shippingDestination[1], testData.CreateOrders.shippingDestination[2], testData.CreateOrders.shippingDestination[3], testData.CreateOrders.shippingDestination[4], testData.CreateOrders.shippingDestination[5], testData.CreateOrders.shippingDestination[6])
+  //     .click('@buttonModifyUserContact')
+  //     .click('@divSecondContactOption')
+  //     .addMultipleProducts(testData.CreateOrders.productsName)
+  //     .sendKeys('@textareaComments', 'Creado por AUTO')
+  //     .click('@buttonSaveOrder')
+  //     .waitForElementVisible('@modalSuccessfulCreation')
+  //   orderNumber = page.extractCreatedOrderNumber(await page.element('@modalSuccessfulCreation').getText())
+  // })
 
   it('Can create a Multi SKU Order and can edit the products price', async function (browser) {
     const page = browser.page.createOrders()
@@ -65,25 +83,6 @@ describe('CreateOrders', function () {
       .sendKeys('@inputGeneralSearch', orderNumber)
       .waitForElementVisible('@tableOrders')
       .assert.hasDescendants('@tableOrders', 'Order created succesfully')
-
     // page.saveScreenshot('tests_output/out.png')
   })
 })
-
-// .execute(function (token) {
-//     // Set the Authorization header with the token
-//     const xhr = new XMLHttpRequest();
-//     xhr.open('GET', 'https://vm-saviaservices-uat.centralus.cloudapp.azure.com/v2/orders?offset=0&limit=100&orderBy=createdAt%3ADESC', false);
-//     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-//     xhr.send(null);
-// }, [browser.globals.authToken])
-
-// browser.globals.authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb21wYW55SWQiOiI2MjllYzZlNzU0MWFiZjdiNDA3YjBhZGUiLCJzdWIiOiI2NGYzYTRhYzRkMjVlYzQ0NTg1OTk2NjUiLCJhcHBUeXBlIjoiU0FWSUFfQ09SRSIsImZ1bGxOYW1lIjoiSnVhbiBFLiBEYXphIiwiZ29vZ2xlU2hlZXRJZCI6IjFNcXJrdUs0QU0wWDVNbUNhSFFzN1lBbFVnblVrcnpWWXROY21HZFRON2RvIiwiaWF0IjoxNjkzODcxNDc2LCJleHAiOjE2OTQzMDM0NzZ9.GYmm7IZwvw0XxnM8EzqiQ3JCgtXBd84jZawexiSuuy8'
-// console.log('Token:', browser.globals.authToken);
-// // browser.setRequestHeader('Authorization', 'Bearer ' + browser.globals.authToken)
-// browser.cookies.set({
-//     name: 'authToken',
-//     value: browser.globals.authToken,
-//     path: '/',
-//     secure: true, // Set to true if using HTTPS
-// })
