@@ -29,8 +29,8 @@ jobs:
 
     - name: Run Nightwatch tests
       run: |
-        # xvfb-run --auto-servernum npm test -- --tag ListOrders --env chrome
-        # xvfb-run --auto-servernum npm test -- --tag ViewOrders --env chrome
+        xvfb-run --auto-servernum npm test -- --tag ListOrders --env chrome
+        xvfb-run --auto-servernum npm test -- --tag ViewOrders --env chrome
         xvfb-run --auto-servernum npm test -- --tag CreateOrders --env chrome
         xvfb-run --auto-servernum npm test -- --tag EditOrders --env chrome
         xvfb-run --auto-servernum npm test -- --tag InvoiceOrders --env chrome
