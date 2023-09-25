@@ -66,11 +66,7 @@ const createOrdersCommands = {
     const page = this
     page.pause(1000)
       .click('@selectorTimeZone')
-      .pause(2000)
-    page.saveScreenshot('screens/regression_tests/out.png')
-    page
       .click('@selectedTimeZone')
-      .pause(1000)
     return this
   },
   editProductPrice: function (price) {
@@ -158,7 +154,7 @@ module.exports = {
     inputActiveOnScreen: { selector: '//input[@inputmode="search"]', locateStrategy: 'xpath' },
     divSearchedClient: { selector: '//div[./span[text()="Regression Test"]]', locateStrategy: 'xpath' },
     selectorTimeZone: { selector: '//div[./span[text()="Seleccionar"]]', locateStrategy: 'xpath' },
-    selectedTimeZone: { selector: '//div[./span[contains(text(), "AM")]]', locateStrategy: 'xpath' },
+    selectedTimeZone: { selector: '//div[./span[contains(text(), "PM")]]', locateStrategy: 'xpath' },
     buttonAddProduct: { selector: '//button[text()="Buscar productos"]', locateStrategy: 'xpath' },
     divSearchedProduct: { selector: '//div[@data-item-index=0]', locateStrategy: 'xpath' },
     spanCloseProductModal: { selector: '//span[@role="button"]', locateStrategy: 'xpath' },

@@ -40,7 +40,7 @@ jobs:
       uses: actions/upload-artifact@v2.2.0
       with:
         name: Screenshots
-        path: screens/regression_tests/*.png
+        path: screens/regression_tests/**/*.png
         retention-days: 1
 
     - name: Upload HTML Report
