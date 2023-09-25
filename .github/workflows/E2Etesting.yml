@@ -28,7 +28,7 @@ jobs:
     - run: sudo apt-get install xvfb
 
     - name: Run Nightwatch tests
-      run: xvfb-run --auto-servernum npm test -- --tag PipelineTest --env chrome
+      run: xvfb-run --auto-servernum npm test -- --tag Regression --env chrome
 
     - name: Upload screenshots
       if: always()
