@@ -64,8 +64,10 @@ const createOrdersCommands = {
   },
   selectTimeZone: function () {
     return this
+      .pause(1000)
       .click('@selectorTimeZone')
       .click('@selectedTimeZone')
+      .pause(1000)
   },
   editProductPrice: function (price) {
     const page = this
