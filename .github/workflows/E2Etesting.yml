@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -26,5 +26,14 @@ jobs:
     - run: npm ci
     - run: mkdir -p screens logs
     - run: sudo apt-get install xvfb
+
     - name: Run Nightwatch tests
       run: xvfb-run --auto-servernum npm test -- --tag PipelineTest --env chrome
+
+    - name: Upload screenshots
+      if: always()
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: Screenshots
+        path: screens/regression_tests/pipelineTest
+        retention-days: 1
