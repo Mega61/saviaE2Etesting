@@ -11,6 +11,11 @@
 //             __/ |
 //            |___/
 
+const TestchromeOptions = {
+  args: ['--lang=es'] // Replace 'es' with the desired language code (e.g., 'es' for Spanish)
+  // Other Chrome options...
+}
+
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
   // if this is not specified, the test source must be passed as the second argument to the test runner.
@@ -43,13 +48,14 @@ module.exports = {
       launch_url: 'savia-app-qa.web.app',
 
       screenshots: {
-        enabled: false,
+        enabled: true,
         path: 'screens',
         on_failure: true
       },
 
       desiredCapabilities: {
-        browserName: 'chrome'
+        browserName: 'chrome',
+        chromeOptions: TestchromeOptions
       },
 
       webdriver: {
