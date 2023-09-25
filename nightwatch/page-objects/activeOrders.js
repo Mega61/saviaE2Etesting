@@ -13,7 +13,7 @@ module.exports = {
     }
   },
   elements: {
-    tableOrders: { selector: '//tbody[@class=" text-gray-600"]', locateStrategy: 'xpath' },
+    tableOrders: { selector: '//tbody[@data-test-id="virtuoso-item-list"]', locateStrategy: 'xpath' },
     inputGeneralSearch: { selector: '//input[contains(@placeholder, "Buscar")]', locateStrategy: 'xpath' },
     buttonSpecificFiltes: { selector: '//button[@tabindex="0"]', locateStrategy: 'xpath' },
     inputOrderNumber: { selector: '//input[@name="orderNumber"]', locateStrategy: 'xpath' },

@@ -17,6 +17,7 @@ describe('InvoiceOrders', function () {
       .waitForElementVisible('@numberOrderNumber')
       .click('@filterInvoiceId')
       .click('@buttonMoreActions')
+      .pause(1000)
       .click('@buttonInvoiceOrder')
 
     orderNumber = await page.element('@numberOrderNumber').getText() // eslint-disable-line
