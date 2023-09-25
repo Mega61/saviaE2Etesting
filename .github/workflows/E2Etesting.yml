@@ -30,10 +30,18 @@ jobs:
     - name: Run Nightwatch tests
       run: xvfb-run --auto-servernum npm test -- --tag Regression --env chrome
 
-    - name: Upload screenshots
+    - name: Upload Screenshots
       if: always()
       uses: actions/upload-artifact@v2.2.0
       with:
         name: Screenshots
         path: screens/regression_tests/**/*.png
+        retention-days: 1
+
+    - name: Upload HTML Report
+      if: always()
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: HtmlReport
+        path: tests_output/nightwatch-html-report/*.html
         retention-days: 1
