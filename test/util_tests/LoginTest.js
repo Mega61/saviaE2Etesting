@@ -5,7 +5,7 @@ module.exports = {
     let page = browser.page.saviaLogin()
     page
       .navigate()
-      .sleep(1000)
+      .pause(1000)
       .sendKeys('@inputEmailLogin', username)
       .click('@buttonLogin')
     page.assert.visible('@emailVerificationPrompt')
