@@ -12,6 +12,7 @@ describe('ViewOrders', function () {
     let page = browser.page.activeOrders()
     page
       .navigate()
+      .pause(1000)
       .waitForElementVisible('@tableOrders')
       .click('@buttonDetails')
 
