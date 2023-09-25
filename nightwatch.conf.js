@@ -12,8 +12,12 @@
 //            |___/
 
 const TestchromeOptions = {
-  args: ['--lang=es'] // Replace 'es' with the desired language code (e.g., 'es' for Spanish)
-  // Other Chrome options...
+  args: ['--lang=es'],
+  prefs: {
+    intl: {
+      accept_languages: 'es'
+    }
+  }
 }
 
 module.exports = {
