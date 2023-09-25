@@ -22,7 +22,6 @@ describe('ListOrders', function () {
       .navigate()
       .sendKeys('@inputGeneralSearch', testData.ListOrders.general_filter)
       .waitForElementVisible('@tableOrders')
-      .pause(2000)
       .assert.hasDescendants('@tableOrders', 'Entries had been with general filter.')
   })
 
