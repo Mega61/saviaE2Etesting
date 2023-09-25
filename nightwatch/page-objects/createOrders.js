@@ -63,11 +63,15 @@ const createOrdersCommands = {
     return this
   },
   selectTimeZone: function () {
-    return this
-      .pause(1000)
+    const page = this
+    page.pause(1000)
       .click('@selectorTimeZone')
+      .pause(2000)
+    page.saveScreenshot('screens/out.png')
+    page
       .click('@selectedTimeZone')
       .pause(1000)
+    return this
   },
   editProductPrice: function (price) {
     const page = this
