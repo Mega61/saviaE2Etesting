@@ -67,7 +67,7 @@ const createOrdersCommands = {
     page.pause(1000)
       .click('@selectorTimeZone')
       .pause(2000)
-    page.saveScreenshot('screens/out.png')
+    page.saveScreenshot('screens/regression_tests/out.png')
     page
       .click('@selectedTimeZone')
       .pause(1000)
