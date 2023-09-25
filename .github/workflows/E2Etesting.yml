@@ -30,13 +30,9 @@ jobs:
     - name: Run Nightwatch tests
       run: |
         xvfb-run --auto-servernum npm test -- --tag ListOrders --env chrome
-        sleep 10
         xvfb-run --auto-servernum npm test -- --tag ViewOrders --env chrome
-        sleep 10
         xvfb-run --auto-servernum npm test -- --tag CreateOrders --env chrome
-        sleep 10
         xvfb-run --auto-servernum npm test -- --tag EditOrders --env chrome
-        sleep 10
         xvfb-run --auto-servernum npm test -- --tag InvoiceOrders --env chrome
 
     - name: Upload Screenshots

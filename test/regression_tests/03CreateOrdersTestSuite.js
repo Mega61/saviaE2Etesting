@@ -32,7 +32,6 @@ describe('CreateOrders', function () {
       .click('@buttonAddOrder')
       .searchClient(testData.CreateOrders.clientName)
       .selectTimeZone()
-      // .addShippingDestination(testData.CreateOrders.shippingDestination[0], testData.CreateOrders.shippingDestination[1], testData.CreateOrders.shippingDestination[2], testData.CreateOrders.shippingDestination[3], testData.CreateOrders.shippingDestination[4], testData.CreateOrders.shippingDestination[5], testData.CreateOrders.shippingDestination[6])
       .click('@buttonModifyUserContact')
       .click('@divSecondContactOption')
       .addMultipleProducts(testData.CreateOrders.productsName)
