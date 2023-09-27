@@ -1,0 +1,51 @@
+name: TestTrigger
+
+on:
+  pull_request:
+    branches:
+      - main
+  #push:
+   # branches:
+    #  - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: E2ETest
+        run: |
+          owner=RepoOwner
+          repo=RepoName
+          curl -X POST https://api.github.com/repos/$owner/$repo/actions/workflows/E2Etesting.yml/dispatches \
+          -H 'Accept: application/vnd.github+json' \
+          -u ${{ secrets.GH_PAT }} \
+          --data '{"ref":"main"}'
+          sleep 5
+          latest_run_id=$(curl -s -X GET "https://api.github.com/repos/$owner/$repo/actions/runs" \
+            -H 'Accept: application/vnd.github+json' \
+            -u ${{ secrets.GH_PAT }} | jq -r '.workflow_runs[0].id')
+          echo $latest_run_id
+          while true; do
+            status=$(curl -s -X GET "https://api.github.com/repos/$owner/$repo/actions/runs/$latest_run_id" \
+              -H 'Accept: application/vnd.github+json' \
+              -u ${{ secrets.GH_PAT }} | jq -r '.status')
+
+            # Check if the workflow status is completed (either success or failure)
+            if [ "$status" == "completed" ]; then
+              break
+            fi
+          done
+
+          conclusion=$(curl -s -X GET "https://api.github.com/repos/$owner/$repo/actions/runs/$latest_run_id" \
+              -H 'Accept: application/vnd.github+json' \
+              -u ${{ secrets.GH_PAT }} | jq -r '.conclusion')
+              
+          echo $conclusion
+          if [ "$conclusion" == "success" ]; then
+            echo "E2E testing workflow was successful."
+          else
+            echo "E2E testing workflow failed."
+            exit 1
+          fi
+      - uses: actions/checkout@v3
