@@ -1,12 +1,5 @@
----
-title: 'Documentación pruebas automatizadas SAVIA'
----
-
 Pruebas automatizadas SAVIA
 ===
-
-
-[TOC]
 
 ## Uso del framework NIGHTWATCH
 
@@ -27,9 +20,11 @@ Pruebas automatizadas SAVIA
 
     ```
     npm test -- --tag "tag de pruebas"
-    
+
 Se debe reemplazar el "tag de pruebas" por un tag válido.
 Actualmente existen los siguientes tags.
+
+## Lista de testSuites
 
 | Tag | TestSuite |
 | -------- | -------- |
@@ -40,4 +35,8 @@ Actualmente existen los siguientes tags.
 | EditOrders     | 04EditOrdersTestSuite     |
 | InvoiceOrders     | 05InvoiceOrdersTestSuite     |
 
+## Lista de tareas iteración 2
 
+- [X] Añadir dependencias **standard**, **husky**, **snazzy**.
+- [X] Implementación de BYPASS para LOGIN con OTP permanente.
+- [X] Construcción de pipeline para PROD y DEVELOP.
