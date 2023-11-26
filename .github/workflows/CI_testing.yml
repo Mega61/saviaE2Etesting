@@ -1,0 +1,118 @@
+name: Savia_CI_Testing
+
+on:
+  workflow_dispatch:
+#   pull_request:
+#     branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      REPO_OWNER: savia-product
+      FRONT_END: savia-client
+      MICRO_1: api-gateway
+      MICRO_2: savia-alegra-connector
+      MICRO_3: master-data
+      TESTING: regression-testing
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout savia_front_end
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ env.REPO_OWNER }}/${{ env.FRONT_END }}
+        path: ${{ env.REPO_OWNER }}/${{ env.FRONT_END }}
+
+    - name: Checkout api_gateway
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ env.REPO_OWNER }}/${{ env.MICRO_1 }}
+        path: ${{ env.REPO_OWNER }}/${{ env.MICRO_1 }}
+
+    - name: Checkout alegra_connector
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ env.REPO_OWNER }}/${{ env.MICRO_2 }}
+        path: ${{ env.REPO_OWNER }}/${{ env.MICRO_2 }}
+
+    - name: Checkout master_data
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ env.REPO_OWNER }}/${{ env.MICRO_3 }}
+        path: ${{ env.REPO_OWNER }}/${{ env.MICRO_3 }}
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Setup .env variables
+      run: |
+        echo "${{ secrets.ENV_API_GATEWAY }}" > ${{ env.REPO_OWNER }}/${{ env.MICRO_1 }}/.env
+        echo "${{ secrets.ENV_ALEGRA_CONNECTOR }}" > ${{ env.REPO_OWNER }}/${{ env.MICRO_2 }}/.env
+        echo "${{ secrets.MASTER_DATA }}" > ${{ env.REPO_OWNER }}/${{ env.MICRO_3 }}/.env
+
+
+    - name: Install dependencies and start front_end
+      run: |
+        cd ${{ env.REPO_OWNER }}/${{ env.FRONT_END }}
+        npm ci
+        npm run start
+      env:
+        CI: true
+
+    - name: Install dependencies and api_gateway
+      run: |
+        cd ${{ env.REPO_OWNER }}/${{ env.MICRO_1 }}
+        npm ci
+        npm run dev &
+      env:
+        CI: true
+
+    - name: Install dependencies and alegra_connector
+      run: |
+        cd ${{ env.REPO_OWNER }}/${{ env.MICRO_2 }}
+        npm ci
+        npm run dev &
+      env:
+        CI: true
+
+    - name: Install dependencies and master_data
+      run: |
+        cd ${{ env.REPO_OWNER }}/${{ env.MICRO_3 }}
+        npm ci
+        npm run dev &
+      env:
+        CI: true
+
+    - name: Run Nightwatch tests
+      run: |
+        cd ${{ env.REPO_OWNER }}/${{ env.TESTING }}
+        sudo apt-get install xvfb
+        npm ci
+        xvfb-run --auto-servernum npm test -- --tag ListOrders --env chrome
+        xvfb-run --auto-servernum npm test -- --tag ViewOrders --env chrome
+        xvfb-run --auto-servernum npm test -- --tag CreateOrders --env chrome
+        xvfb-run --auto-servernum npm test -- --tag EditOrders --env chrome
+        xvfb-run --auto-servernum npm test -- --tag InvoiceOrders --env chrome
+
+    - name: Upload Screenshots
+      if: always()
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: Screenshots
+        path: ${{ env.REPO_OWNER }}/${{ env.TESTING }}/screens/regression_tests/**/*.png
+        retention-days: 1
+
+    - name: Upload HTML Report
+      if: always()
+      uses: actions/upload-artifact@v2.2.0
+      with:
+        name: HtmlReport
+        path: ${{ env.REPO_OWNER }}/${{ env.TESTING }}/tests_output/nightwatch-html-report/*.html
+        retention-days: 1
