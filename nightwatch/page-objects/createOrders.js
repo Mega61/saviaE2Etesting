@@ -20,19 +20,19 @@ const createOrdersCommands = {
       .click('@spanCloseProductModal')
   },
   addMultipleProducts: function (productName) {
+    console.log(productName)
     const page = this
-    page
-      .click('@buttonAddProduct')
-      .sendKeys('@inputActiveOnScreen', productName[0])
-      .click('@divSearchedProduct')
+    page.click('@buttonAddProduct')
 
-    page.pause(2000)
-    page.element('@inputActiveOnScreen').clear()
-    page.pause(2000)
-    page
-      .sendKeys('@inputActiveOnScreen', productName[1])
-      .click('@divSearchedProduct')
-      .click('@spanCloseProductModal')
+    for (const product of productName) {
+      page.sendKeys('@inputActiveOnScreen', product)
+      page.pause(2000)
+      page.click('@divSearchedProduct')
+      page.pause(2000)
+      page.element('@inputActiveOnScreen').clear()
+    }
+
+    page.click('@spanCloseProductModal')
 
     return this
   },

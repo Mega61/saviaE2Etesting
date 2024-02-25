@@ -11,9 +11,11 @@ describe('InvoiceOrders', function () {
   it('It can Invoice an order', async function (browser) {
     const page = browser.page.activeOrders()
     let orderNumber
+    page.navigate()
     page
-      .navigate()
+      .pause(2000)
       .sendKeys('@inputGeneralSearch', testData.InvoiceOrders.clientName)
+      .pause(2000)
       .waitForElementVisible('@numberOrderNumber')
       .click('@filterInvoiceId')
       .click('@buttonMoreActions')
@@ -26,7 +28,7 @@ describe('InvoiceOrders', function () {
     page.element('@inputGeneralSearch').clear()
 
     page
-      .pause(8000)
+      .pause(10000)
       .sendKeys('@inputGeneralSearch', orderNumber)
       .pause(2000)
       .assert.visible('@numberInvoiceId', 'Order was invoiced successfully')
